@@ -25,7 +25,7 @@ def main():
         st.image("Streamlit_Images/model1.PNG", width=1000)
 
     with model_vis:
-        st.header("An owl")
+        st.header("Model Visualizations")
         st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
         chart_data = pd.DataFrame(
         np.random.randn(20, 3),
@@ -34,11 +34,11 @@ def main():
         st.line_chart(chart_data)
 
     with survey_doc:
-        st.header("A dog")
+        st.header("Survey Documentation")
         st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
 
     with survey_res:
-        st.header("An owl")
+        st.header("Survey Responses")
         st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
 
 if __name__ == "__main__":
