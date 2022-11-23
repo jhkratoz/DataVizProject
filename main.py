@@ -21,8 +21,8 @@ def main():
         st.write(columns_df)
 
     with models:
-        st.header("A dog")
-        st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+        st.header("Logistic Regression Model")
+        st.image("Streamlit_Images/model1.PNG", width=1000)
 
     with model_vis:
         st.header("An owl")
