@@ -39,7 +39,23 @@ def main():
 
     with survey_res:
         st.header("Survey Responses")
-        st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
+        st.image("Streamlit_Images/survey1.PNG", width=700)
+        st.image("Streamlit_Images/survey2.PNG", width=700)
+        st.image("Streamlit_Images/survey3.PNG", width=700)
+        st.image("Streamlit_Images/survey4.PNG", width=700)
+        st.image("Streamlit_Images/survey5.PNG", width=700)
+        st.image("Streamlit_Images/survey6.PNG", width=700)
+        st.image("Streamlit_Images/survey7.PNG", width=700)
+        st.image("Streamlit_Images/survey8.PNG", width=700)
+        st.image("Streamlit_Images/survey9.PNG", width=700)
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     main()
