@@ -1,0 +1,3 @@
+[console_scripts]
+my-command = CSE6242_APP.main:main
+

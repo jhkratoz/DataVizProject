@@ -1,0 +1,8 @@
+README.md
+setup.py
+CSE6242_SPRING_TEAM85.egg-info/PKG-INFO
+CSE6242_SPRING_TEAM85.egg-info/SOURCES.txt
+CSE6242_SPRING_TEAM85.egg-info/dependency_links.txt
+CSE6242_SPRING_TEAM85.egg-info/entry_points.txt
+CSE6242_SPRING_TEAM85.egg-info/requires.txt
+CSE6242_SPRING_TEAM85.egg-info/top_level.txt
