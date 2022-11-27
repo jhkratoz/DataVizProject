@@ -84,6 +84,8 @@ pip install -e .
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
+[![IMAGE ALT TEXT HERE](https://i9.ytimg.com/vi/0drj7pyjIRA/mqdefault.jpg?sqp=CPjlj5wG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWShlMA8=&rs=AOn4CLDMpjD2mvpBLK1u9w37uXLKRxpGXw)](https://www.youtube.com/watch?v=0drj7pyjIRA)
+
 ## Usage
 
 Run the app:
