@@ -5,6 +5,7 @@ import numpy as np
 import time
 
 from src.utils.constants import DATA_DESC, DATA_TYPES
+from MonthStuff.Months import *
 
 def main():
     st.title("Inflation's impact on Digital Advertising")
@@ -49,11 +50,19 @@ def main():
         st.image("Streamlit_Images/survey8.PNG", width=700)
         st.image("Streamlit_Images/survey9.PNG", width=700)
 
-
-
-
-
-
+    with month_comparisons:
+        st.header("Month Comparisons (April VS March)")
+        s=st.selectbox('Pick the category of interest to compare', ['cats', 'dogs'])
+        if(s=='cats'):
+            st.write("You picked cats")
+        else:
+            st.write("you picked dogs :(")
+        march,april = getMonthData(model_data)
+        st.write(march.head())
+        st.write(april.head())
+        conversion_comparison(march,april)
+        shipping_level_comparison(march,april)
+        price_comparison(march,april)
 
 
 
