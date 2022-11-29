@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import numpy as np
 import time
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 from src.utils.constants import DATA_DESC, DATA_TYPES
 
@@ -19,6 +21,19 @@ def main():
         columns_df['Data Type'] = [DATA_TYPES[x] for x in columns_df['Column Name']]
         columns_df['Description'] = [DATA_DESC[x] for x in columns_df['Column Name']]
         st.write(columns_df)
+        
+        md = model_data.copy()
+        taxonomies = ['All'] + md['taxonomy_level1'].unique().tolist()
+        option = st.selectbox('Product Category',taxonomies)
+        if option != 'All':
+            md = md.query(f"taxonomy_level1=='{option}'")
+        md['boosted'] = md['boosted'].apply(lambda x: int(x))
+        y = pd.get_dummies(md.platform, prefix='platform')
+        x = pd.get_dummies(md.device_type, prefix='device_type')
+        md = pd.concat([md,y,x], axis=1)
+        fig = plt.figure(figsize=(10, 7))
+        sns.heatmap(md.drop(columns=['boosted','taxonomy_level']).corr().round(2), annot=True, annot_kws={"size": 10}, linewidths=0.1, linecolor='black').set(title='Correlation Heatmap')
+        st.pyplot(fig)
 
     with models:
         st.header("Logistic Regression Model")
