@@ -118,6 +118,7 @@ def main():
         st.pyplot(fig3)
 
         st.write('Average Accuracy: ', round(sum(acc)/len(acc),2), '%')
+        st.write('Table Output:')
         st.write(coef_df)
 
     with survey_doc:
