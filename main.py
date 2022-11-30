@@ -38,9 +38,13 @@ def main():
         fig = plt.figure(figsize=(10, 7))
         sns.heatmap(md.drop(columns=['boosted','taxonomy_level']).corr().round(2), annot=True, annot_kws={"size": 10}, linewidths=0.1, linecolor='black').set(title='Correlation Heatmap')
         st.pyplot(fig)
-
-        fig = px.violin(md, y="price", x="taxonomy_level1", color="conversion", box=True)
+        if option == 'All':
+            md = md.query("taxonomy_level1 in ('Home, Furniture and Garden','Clothes and accessories','Tools and Construction')")
+        md=md.rename(columns={'price':'Price','taxonomy_level1':'Product Category','conversion':'Conversion'})
+        fig = px.violin(md, y="Price", x="Product Category", color="Conversion", box=True)
         st.write(fig)
+        if option == 'All':
+            st.caption('Too many product categories to show: Showing Top 3 Product Categories')
 
     with models:
         st.header("Logistic Regression Model")
