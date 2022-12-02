@@ -14,11 +14,60 @@ def getMonthData(parqFrame):
     march_portion = overall_set[overall_set.month == "March"]
     april_portion = overall_set[overall_set.month == "April"]
     return (march_portion,april_portion)
-def conversion_comparison(march,april):
-    march_conv_percentage = sum(march['conversion'].values) / len(march['conversion'].values) *100.00
-    april_conv_percentage = sum(april['conversion'].values) / len(april['conversion'].values) *100.00
+def conversion_comparison(march_portion,april_portion):
+    march_conv_percentage = sum(march_portion['conversion'].values) / len(march_portion['conversion'].values) *100.00
+    april_conv_percentage = sum(april_portion['conversion'].values) / len(april_portion['conversion'].values) *100.00
     st.write("The March Conversion Percentage was: ",march_conv_percentage)
     st.write("The April Conversion Percentage was: ",april_conv_percentage)
+    taxes = march_portion['taxonomy_level1'].unique().tolist()
+    conv_level_by_tax_march = []
+    conv_level_by_tax_april = []
+    conv_level_by_tax_april_ct = []
+    conv_level_by_tax_march_ct = []
+    for tax in taxes:
+        relevant_part_march = march_portion.loc[march_portion['taxonomy_level1'] == tax]
+        relevant_part_april = april_portion.loc[april_portion['taxonomy_level1'] == tax]
+        x = len(relevant_part_march['conversion'].values)
+        y = len(relevant_part_april['conversion'].values)
+        conv_level_by_tax_march_ct.append(sum(relevant_part_march['conversion'].values))
+        conv_level_by_tax_april_ct.append(sum(relevant_part_april['conversion'].values))
+        if x != 0:
+            (conv_level_by_tax_march.append(sum(relevant_part_march['conversion'].values) * 100.00
+                                            / x))
+        else:
+            conv_level_by_tax_march.append(0)
+        if y != 0:
+            (conv_level_by_tax_april.append(sum(relevant_part_april['conversion'].values) * 100.00
+                                            / y))
+        else:
+            conv_level_by_tax_april.append(0)
+    import plotly.graph_objs as go
+    import plotly.express as px
+    option = (st.selectbox("For which category would you like to see a comparison of Conversion Rate of Goods in Category by Month",
+                          taxes))
+    ind = taxes.index(option)
+    mar_val = round(conv_level_by_tax_march[ind], 1)
+    apr_val = round(conv_level_by_tax_april[ind], 1)
+    barfig = go.Figure([go.Bar(x=['March', 'April'], y=[mar_val, apr_val])])
+    (barfig.update_layout(font=dict(family='Arial', size=16, color='white'), xaxis=dict(title_text='Month'),
+                          yaxis=dict(title_text='Rate as a Percentage'),
+                          title=dict(text='Conversion Rate of Goods in Category by Month')))
+    st.plotly_chart(barfig)
+    opt = st.radio("Distribution of Goods Converted by Category", ['March', 'April'])
+    if opt == 'March':
+        st.write("Distribution of Goods Converted by Category -- March")
+        st.write("________________________________________________________")
+        trace = go.Pie(labels=taxes, values=conv_level_by_tax_march_ct)
+        data = [trace]
+        fig = go.Figure(data=data)
+        st.plotly_chart(fig)
+    else:
+        st.write("Distribution of Goods Converted by Category -- April")
+        st.write("________________________________________________________")
+        trace = go.Pie(labels=taxes, values=conv_level_by_tax_april_ct)
+        data = [trace]
+        fig = go.Figure(data=data)
+        st.plotly_chart(fig)
 def shipping_level_comparison(march_portion,april_portion):
     march_prop_freely_shipped_level = (sum(march_portion['free_shipping'].values) *100.00/ len(
         march_portion['free_shipping'].values))
@@ -26,27 +75,99 @@ def shipping_level_comparison(march_portion,april_portion):
         april_portion['free_shipping'].values))
     st.write("The March percentage of items Freely Shipped was: ", march_prop_freely_shipped_level)
     st.write("The April percentage of items Freely Shipped was: ", april_prop_freely_shipped_level)
-    #went from 37.5% free shipping to 41.83% free shipping
+    taxes = march_portion['taxonomy_level1'].unique().tolist()
+    ship_level_by_tax_march = []
+    ship_level_by_tax_april = []
+    ship_level_by_tax_april_ct = []
+    ship_level_by_tax_march_ct = []
+    for tax in taxes:
+        relevant_part_march = march_portion.loc[march_portion['taxonomy_level1'] == tax]
+        relevant_part_april = april_portion.loc[april_portion['taxonomy_level1'] == tax]
+        x=len(relevant_part_march['free_shipping'].values)
+        y=len(relevant_part_april['free_shipping'].values)
+        ship_level_by_tax_march_ct.append(sum(relevant_part_march['free_shipping'].values))
+        ship_level_by_tax_april_ct.append(sum(relevant_part_april['free_shipping'].values))
+        if x != 0:
+            (ship_level_by_tax_march.append(sum(relevant_part_march['free_shipping'].values) * 100.00
+                                 / x))
+        else: ship_level_by_tax_march.append(0)
+        if y!=0:
+            (ship_level_by_tax_april.append(sum(relevant_part_april['free_shipping'].values) * 100.00
+                                 / y))
+        else: ship_level_by_tax_april.append(0)
+    import plotly.graph_objs as go
+    import plotly.express as px
+    option = st.selectbox("For which category would you like to see a comparison of Percentage Freely Shipped by Month",taxes)
+    ind = taxes.index(option)
+    mar_val = round(ship_level_by_tax_march[ind],1)
+    apr_val = round(ship_level_by_tax_april[ind],1)
+    barfig = go.Figure([go.Bar(x=['March','April'], y=[mar_val,apr_val])])
+    (barfig.update_layout(font=dict(family='Arial', size=16, color='white'),xaxis=dict(title_text='Month'),
+                         yaxis=dict(title_text='Percentage'),
+                         title=dict(text='Percentage of Goods in Category Freely Shipped by Month')))
+    st.plotly_chart(barfig)
+    opt = st.radio("Distribution of Freely Shipped Goods by Category",['March','April'])
+    if opt == 'March':
+        st.write("Distribution of Freely Shipped Goods by Category -- March")
+        st.write("________________________________________________________")
+        trace = go.Pie(labels=taxes, values=ship_level_by_tax_march_ct)
+        data = [trace]
+        fig = go.Figure(data=data)
+        st.plotly_chart(fig)
+    else:
+        st.write("Distribution of Freely Shipped Goods by Category -- April")
+        st.write("________________________________________________________")
+        trace = go.Pie(labels=taxes, values=ship_level_by_tax_april_ct)
+        data = [trace]
+        fig = go.Figure(data=data)
+        st.plotly_chart(fig)
 def price_comparison(march_portion,april_portion):
-    march_ave_pri_by_cat = (march_portion[["month", "price", "taxonomy_level1"]].groupby(by=['taxonomy_level1'], as_index=False)[
-        'price'].mean())
-    april_ave_pri_by_cat = (april_portion[["month", "price", "taxonomy_level1"]].groupby(by=['taxonomy_level1'], as_index=False)[
-        'price'].mean())
-    cat_ids_in_march = set(march_ave_pri_by_cat['taxonomy_level1'].unique())
-    cat_ids_in_april = set(april_ave_pri_by_cat['taxonomy_level1'].unique())
-    cat_ids_in_common = list(cat_ids_in_march.intersection(cat_ids_in_april))
-    march_ave_pri_common = ([march_ave_pri_by_cat.loc[(march_ave_pri_by_cat["taxonomy_level1"] == cat), "price"].item() for
-                            cat in cat_ids_in_common])
-    april_ave_pri_common = ([april_ave_pri_by_cat.loc[(april_ave_pri_by_cat["taxonomy_level1"] == cat), "price"].item() for
-                            cat in cat_ids_in_common])
-    diff_in_category_price = scpSta.ttest_ind(april_ave_pri_common,march_ave_pri_common)  # which is 2 sided so true one sided p val is
-    actual_cat_pri_pvalue = diff_in_category_price.pvalue / 2
-    st.write("The p value for comparison between common categories was: ", actual_cat_pri_pvalue," which is fairly insginificant probably due to short time period of measure. Effects of shock had not hit yet.")  # .013 << .05 which means thats the mean prices by category in april were significantly higher than those in march as expected
-#logistictype
-# #1
-# #avePriceByCategoryMonthtoMonth
-# #use NamedAggregates
-#
-#
-
-
+    march_price_level = (sum(march_portion['price'].values) * 100.00 / len(
+        march_portion['price'].values))
+    april_price_level = (sum(april_portion['price'].values) * 100.00 / len(
+        april_portion['price'].values))
+    st.write("The general average price for all goods in March was: ", march_price_level)
+    st.write("The general average price for all goods in April was: ", april_price_level)
+    taxes = march_portion['taxonomy_level1'].unique().tolist()
+    price_level_by_tax_march = []
+    price_level_by_tax_april = []
+    for tax in taxes:
+        relevant_part_march = march_portion.loc[march_portion['taxonomy_level1'] == tax]
+        relevant_part_april = april_portion.loc[april_portion['taxonomy_level1'] == tax]
+        x = len(relevant_part_march['price'].values)
+        y = len(relevant_part_april['price'].values)
+        if x != 0:
+            (price_level_by_tax_march.append(sum(relevant_part_march['price'].values) / x))
+        else:
+            price_level_by_tax_march.append(0)
+        if y != 0:
+            (price_level_by_tax_april.append(sum(relevant_part_april['price'].values)
+                                            / y))
+        else:
+            price_level_by_tax_april.append(0)
+    import plotly.graph_objs as go
+    import plotly.express as px
+    option = st.selectbox("For which category would you like to see a comparison of Percentage Freely Shipped by Month",
+                          taxes)
+    ind = taxes.index(option)
+    mar_val = round(price_level_by_tax_march[ind], 1)
+    apr_val = round(price_level_by_tax_april[ind], 1)
+    barfig = go.Figure([go.Bar(x=['March', 'April'], y=[mar_val, apr_val])])
+    (barfig.update_layout(font=dict(family='Arial', size=16, color='white'), xaxis=dict(title_text='Month'),
+                          yaxis=dict(title_text='Average Price'),
+                          title=dict(text='Average Price of Goods By Category')))
+    st.plotly_chart(barfig)
+    testForPriceDifferences = (scpSta.ttest_ind(price_level_by_tax_april,price_level_by_tax_march).pvalue)/2
+    st.write("The P value for testing for changes in average prices of goods via comparison of common categories in March and April was: ", testForPriceDifferences," which is insignificant overall but individual categories can be seen to have major changes which is telling.")
+    st.subheader("Top N Category Average Price Increases:")
+    n = st.slider("Select the amount N of top price changing categories you'd like to see: ",min_value = 1,max_value=10,step=1)
+    n = -1*n
+    pct_change = [round(((i-v)/v * 100.00),1) for i,v in zip(price_level_by_tax_april,price_level_by_tax_march)]
+    top_5_idx = np.argsort(pct_change)[n:].tolist()
+    top_5_values = [pct_change[i] for i in top_5_idx]
+    rel_cats = [taxes[i] for i in top_5_idx]
+    percentage_change = pd.DataFrame(
+        {'Category (Taxonomy Level 1)': rel_cats,
+         'Percentage Increase': top_5_values
+         })
+    st.dataframe(percentage_change)

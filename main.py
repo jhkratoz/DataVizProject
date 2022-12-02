@@ -67,17 +67,17 @@ def main():
 
     with month_comparisons:
         st.header("Month Comparisons (April VS March)")
-        s=st.selectbox('Pick the category of interest to compare', ['cats', 'dogs'])
-        if(s=='cats'):
-            st.write("You picked cats")
-        else:
-            st.write("you picked dogs :(")
-        march,april = getMonthData(model_data)
-        st.write(march.head())
-        st.write(april.head())
-        conversion_comparison(march,april)
-        shipping_level_comparison(march,april)
-        price_comparison(march,april)
+        s=st.selectbox('Pick the category of interest to compare', ['ShippingLevel', 'Conversion','Price'])
+        march, april = getMonthData(model_data)
+        if(s=='ShippingLevel'):
+            st.subheader("Shipping Level Comparisons")
+            shipping_level_comparison(march, april)
+        elif(s=='Conversion'):
+            st.subheader("Conversion Level Comparisons")
+            conversion_comparison(march, april)
+        elif(s=='Price'):
+            st.subheader("Average Price Level Comparisons")
+            price_comparison(march,april)
 
 
 
