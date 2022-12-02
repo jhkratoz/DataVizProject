@@ -147,7 +147,7 @@ def price_comparison(march_portion,april_portion):
             price_level_by_tax_april.append(0)
     import plotly.graph_objs as go
     import plotly.express as px
-    option = st.selectbox("For which category would you like to see a comparison of Percentage Freely Shipped by Month",
+    option = st.selectbox("For which category would you like to see a comparison of Average Price Level by Month",
                           taxes)
     ind = taxes.index(option)
     mar_val = round(price_level_by_tax_march[ind], 1)
