@@ -125,10 +125,6 @@ def main():
         st.write('Table Output:')
         st.write(coef_df)
 
-    with survey_doc:
-        st.header("Survey Documentation")
-        st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
-
     with survey_res:
         st.header("Survey Responses")
         st.image("Streamlit_Images/survey1.PNG", width=700)
