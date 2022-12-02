@@ -73,18 +73,23 @@ To get a local copy up and running follow these simple example steps:
 
 Clone the repo:
 ```
+*Make Sure You change director to git folder locally /DataVizProject
 git clone https://github.com/jhkratoz/DataVizProject.git
 ```
 
 Install Deps (within project folder)
 ```
 pip install -e .
+
+Some Windows Users:
+pip install -e . --user
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
-[![IMAGE ALT TEXT HERE](https://i9.ytimg.com/vi/0drj7pyjIRA/mqdefault.jpg?sqp=CPjlj5wG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWShlMA8=&rs=AOn4CLDMpjD2mvpBLK1u9w37uXLKRxpGXw)](https://www.youtube.com/watch?v=0drj7pyjIRA)
+<div>Installation Video:</div>
+[!(https://i9.ytimg.com/vi/0drj7pyjIRA/mqdefault.jpg?sqp=CPjlj5wG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgWShlMA8=&rs=AOn4CLDMpjD2mvpBLK1u9w37uXLKRxpGXw)](https://www.youtube.com/watch?v=0drj7pyjIRA)
 
 ## Usage
 
