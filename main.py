@@ -17,7 +17,7 @@ def main():
     st.title("Inflation's impact on Digital Advertising")
     st.caption('Team-85: Justin Handsman, Jenni Ayash, Korou M, Kevin Fernandez, Landon Lowe')
     model_data = pd.read_parquet('src/data/data')
-    data_doc, models, model_vis, survey_doc, survey_res,month_comparisons = st.tabs(["Data Documentation", "Models", "Model Visualizations","Survey Documentation","Survey Results","Month Comparisons"])
+    data_doc, models, model_vis, survey_res,month_comparisons = st.tabs(["Data Documentation", "Models", "Model Visualizations","Survey Results","Month Comparisons"])
 
     with data_doc:
         st.header("Sample Data")
